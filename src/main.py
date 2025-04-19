@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from fastapi.responses import FileResponse
+from fastapi.middleware.cors import CORSMiddleware
 import pickle
 import pandas as pd
 
@@ -8,6 +9,15 @@ from .data_model import Water
 app = FastAPI(
     title="Water Potability Prediction API",
     description="API for predicting water potability using a machine learning model.",
+)
+
+# Add CORS middleware to allow requests from any origin (for development)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["https://water-portability-front-4ry2j5r3l.vercel.app"],  # In production, specify your frontend URL
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 with open("model/model.pkl", "rb") as model_file:
