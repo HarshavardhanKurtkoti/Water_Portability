@@ -9,10 +9,10 @@ WORKDIR /app
 FROM base AS dev
 # Install build tools for numpy and other packages
 RUN apt-get update && apt-get install -y build-essential gcc && rm -rf /var/lib/apt/lists/*
-COPY requirements.txt .
+COPY requirements.txt . 
 RUN pip install --no-cache-dir -r requirements.txt
 RUN pip install watchdog[watchmedo] uvicorn
-COPY . .
+COPY . . 
 EXPOSE 8000
 CMD ["watchmedo", "auto-restart", "--patterns=*.py", "--recursive", "--", "uvicorn", "src.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
 
@@ -23,9 +23,15 @@ CMD ["watchmedo", "auto-restart", "--patterns=*.py", "--recursive", "--", "uvico
 FROM base AS prod
 # Install build tools for numpy and other packages
 RUN apt-get update && apt-get install -y build-essential gcc && rm -rf /var/lib/apt/lists/*
-COPY requirements.txt .
+COPY requirements.txt . 
 RUN pip install --no-cache-dir -r requirements.txt
-COPY . .
+# Install DVC and git
+RUN pip install dvc && apt-get update && apt-get install -y git
+COPY . . 
+# Initialize a git repository for DVC to work
+RUN git init
+# Run DVC pipeline to ensure all outputs are up-to-date
+RUN dvc repro
 EXPOSE 8000
 CMD ["uvicorn", "src.main:app", "--host", "0.0.0.0", "--port", "8000"]
 
