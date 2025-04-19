@@ -14,7 +14,7 @@ app = FastAPI(
 # Add CORS middleware to allow requests from any origin (for development)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["https://water-portability-front-qki67v86x.vercel.app/"],  # In production, specify your frontend URL
+    allow_origins=["https://water-portability-front-qki67v86x.vercel.app"],  # In production, specify your frontend URL
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
