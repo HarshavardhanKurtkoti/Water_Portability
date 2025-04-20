@@ -2,6 +2,8 @@
 
 Welcome to the **Water Potability Prediction** project! This repository demonstrates an **end-to-end Machine Learning** workflow for predicting water potability, from data collection and processing to model training, evaluation, and deployment. The project incorporates **MLOps best practices**, including **data versioning**, **containerization**, and **cloud deployment**.
 
+A machine learning project that predicts water potability using a FastAPI backend and a modern React + Vite frontend. The project features data processing, model training, and deployment workflows following MLOps best practices, with a user-friendly UI for real-time predictions.
+
 ## Table of Contents
 
 1. [Project Overview](#project-overview)
